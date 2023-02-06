@@ -8,7 +8,7 @@ ci:
 
 repos:
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
-    rev: "v4.0.1"
+    rev: "v4.4.0"
     hooks:
       - id: "check-added-large-files"
       - id: "check-ast"
@@ -27,7 +27,7 @@ repos:
       - id: "trailing-whitespace"
 
   - repo: "https://github.com/asottile/reorder_python_imports"
-    rev: "v2.6.0"
+    rev: "v3.9.0"
     hooks:
       - id: "reorder-python-imports"
         args:
@@ -36,7 +36,7 @@ repos:
           - "--separate-from-import"
 
   - repo: "https://github.com/ambv/black"
-    rev: "21.9b0"
+    rev: "23.1.0"
     hooks:
       - id: "black"
         language_version: "python3.9"
