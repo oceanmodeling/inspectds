@@ -2,12 +2,29 @@
 name: "Tests"
 
 on:
-  - "push"
-  - "pull_request"
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - '**.py'
+      - '.github/workflows/test*.yml'
+      - 'pyproject.toml'
+      - 'poetry.lock'
+      - 'conda-lock.yml'
+      - 'requirements/*'
+  pull_request:
+    paths:
+      - '**.py'
+      - '.github/workflows/test*.yml'
+      - 'pyproject.toml'
+      - 'poetry.lock'
+      - 'conda-lock.yml'
+      - 'requirements/*'
 
 jobs:
   run_tests:
-    name: "conda + pip test"
+    name: "test ${{ matrix.python-version }} on ${{ matrix.os }}"
     strategy:
       fail-fast: true
       matrix:
@@ -16,65 +33,52 @@ jobs:
           - "macos"
         python-version:
           - "3.9"
+          - "3.10"
+          - "3.11"
     runs-on: "${{ matrix.os }}-latest"
     defaults:
       run:
-        shell: "bash -l {0}"
+        shell: "bash -el {0}"
     steps:
+      - uses: "actions/checkout@main"
 
-      - name: "Checkout repo"
-        uses: "actions/checkout@v2"
-
+      # Setup conda + cache
       - name: "Cache conda pkgs"
-        uses: "actions/cache@v2"
+        uses: "actions/cache@main"
         env:
           # Increase this value to reset cache if etc/example-environment.yml has not changed
           CACHE_NUMBER: 0
-          LOCK_FILE: "requirements/conda-lock-${{ runner.os }}-64"
+          LOCK_FILE: "ci/conda-lock-${{ runner.os }}-64-py${{ matrix.python-version }}"
         with:
           path: "~/conda_pkgs_dir"
-          key: "conda_pkgs-${{ env.CACHE_NUMBER }}-${{ hashFiles( env.LOCK_FILE ) }}"
-
+          key: "conda-${{ runner.os }}-${{ hashFiles( env.LOCK_FILE ) }}-${{ env.CACHE_NUMBER }}"
       - name: "Setup conda"
         uses: "conda-incubator/setup-miniconda@v2"
         with:
           activate-environment: "inspectds_ci"
+          # python-version: ${{ matrix.python-version }}
+          # mamba-version: "*"
+          channels: "conda-forge"
           auto-update-conda: true
           use-only-tar-bz2: true # IMPORTANT: This needs to be set for caching to work properly!
           channel-priority: "strict"
-          environment-file: "requirements/conda-lock-${{ runner.os }}-64"
+          environment-file: "ci/conda-lock-${{ runner.os }}-64-py${{ matrix.python-version }}"
 
-      - name: "Debug pip"
-        run: |
+      - run: printenv | sort
+      - run: |
+          conda info
+          mamba info
+          conda list
+          conda config --show-sources
+          conda config --show
+      - run: |
           which python
-          which pip
-          pip --version
-          pip cache dir
+          python --version
+          python -m pip --version
+          python -m pip cache info
 
-      - name: "Get pip cache dir"
-        id: "pip-cache"
-        run: |
-          echo "::set-output name=dir::$(pip cache dir)"
-
-      - name: "Cache pip"
-        uses: "actions/cache@v2"
-        env:
-          # Increase this value to reset cache if files in tests/data have been added/removed
-          CACHE_NUMBER: 0
-        with:
-          path: "${{ steps.pip-cache.outputs.dir }}"
-          key: "${{ runner.os }}-pip-${{ env.CACHE_NUMBER }}-${{ hashFiles('requirements/requirements-dev.txt') }}"
-
-      - name: "Install dependencies"
-        run: "pip install -r requirements/requirements-dev.txt"
-
-      - name: "Test installation"
-        run: |
-          python -m cfgrib selfcheck
-          python -m pytest --version
-
-      - name: "Run mypy"
-        run: "mypy inspectds"
-
-      - name: "Run tests"
-        run: "python -mpytest tests --verbose --showlocals"
+      - run: "python -mpip install -r requirements/requirements-dev.txt"
+      - run: python -m cfgrib selfcheck
+      - run: mypy --version
+      - run: mypy inspectds
+      - run: make test

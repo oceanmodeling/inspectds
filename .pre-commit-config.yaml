@@ -35,6 +35,11 @@ repos:
       - id: "python-check-blanket-type-ignore"
       - id: "python-use-type-annotations"
 
+  - repo: "https://github.com/python-jsonschema/check-jsonschema"
+    rev: "0.22.0"
+    hooks:
+      - id: "check-github-workflows"
+
   - repo: "https://github.com/asottile/reorder_python_imports"
     rev: "v3.9.0"
     hooks:
@@ -66,10 +71,13 @@ repos:
         args: ["--check"]
       - id: "poetry-export"
         name: 'poetry export main'
-        args: ["--without-hashes", "--only", "main", "-f", "requirements.txt", "-o", "requirements/requirements.txt"]
+        args: ["--without-hashes", "-f", "requirements.txt", "-o", "requirements/requirements.txt"]
+      - id: "poetry-export"
+        name: 'poetry export main + grib'
+        args: ["--without-hashes", "-E", "grib", "-f", "requirements.txt", "-o", "requirements/requirements-extras.txt"]
       - id: "poetry-export"
         name: 'poetry export dev'
-        args: ["--without-hashes", "--with", "dev", "--with", "docs", "--with", "jupyter", "-f", "requirements.txt", "-o", "requirements/requirements-dev.txt"]
+        args: ["--without-hashes", "--with", "dev", "-E", "grib", "-f", "requirements.txt", "-o", "requirements/requirements-dev.txt"]
 
   - repo: "local"
     hooks:

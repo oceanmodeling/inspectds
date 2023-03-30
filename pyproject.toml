@@ -12,7 +12,7 @@ python = ">=3.9"
 xarray = "*"
 zarr = ">=2.8"
 typer = "*"
-netCDF4 = "*"
+netcdf4 = "*"
 cfgrib = { version = ">=0.9", optional = true }
 
 [tool.poetry.extras]
@@ -34,6 +34,18 @@ requires = [
     "poetry-dynamic-versioning",
 ]
 build-backend = "poetry_dynamic_versioning.backend"
+
+[tool.conda-lock]
+channels = [
+    'conda-forge',
+]
+platforms = [
+    'linux-64',
+    'osx-64',
+]
+
+[tool.conda-lock.dependencies]
+eccodes = "*"
 
 [tool.black]
 line-length = 108

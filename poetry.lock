@@ -789,4 +789,4 @@ grib = ["cfgrib"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9"
-content-hash = "2acd12763692bdb3b2f0511cd7813df7b34f920bb8fa778dadd54c536f471155"
+content-hash = "e33f9e5c96c68c105a33c40e38fbd93b917d29e215e3414cb5af18a57c56c819"
