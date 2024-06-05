@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "inspectds"
-version = "0.1.0"
+version = "0.3.0"
 description = ""
 authors = ["Panos Mavrogiorgos <pmav99@gmail.com>"]
 license = "Unlicense"
@@ -27,10 +27,13 @@ cfgrib = { version = ">=0.9", optional = true }
 netcdf4 = "*"
 typer = {version = ">=0.9.0", extras = ["all"]}
 xarray = "*"
+xarray-selafin = {version = "*", optional = true}
 zarr = ">=2.8"
 
 [tool.poetry.extras]
 grib = ["cfgrib"]
+selafin = ["xarray-selafin"]
+all = ["cfgrib", "xarray-selafin"]
 
 [tool.poetry.group.dev.dependencies]
 covdefaults = "*"

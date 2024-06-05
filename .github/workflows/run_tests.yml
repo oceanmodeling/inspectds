@@ -7,20 +7,20 @@ on:
       - main
       - master
     paths:
-      - '**.py'
-      - '.github/workflows/test*.yml'
-      - 'pyproject.toml'
-      - 'poetry.lock'
-      - 'conda-lock.yml'
-      - 'requirements/*'
+      - "**.py"
+      - ".github/workflows/test*.yml"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - "conda-lock.yml"
+      - "requirements/*"
   pull_request:
     paths:
-      - '**.py'
-      - '.github/workflows/test*.yml'
-      - 'pyproject.toml'
-      - 'poetry.lock'
-      - 'conda-lock.yml'
-      - 'requirements/*'
+      - "**.py"
+      - ".github/workflows/test*.yml"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - "conda-lock.yml"
+      - "requirements/*"
 
 jobs:
   run_tests:
