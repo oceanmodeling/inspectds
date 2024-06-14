@@ -5,11 +5,11 @@
 # available, unless you explicitly update the lock file.
 #
 # Install this environment as "YOURENV" with:
-#     conda-lock install -n YOURENV conda-lock-py3.11.yml
+#     conda-lock install -n YOURENV conda-lock-py3.12.yml
 # To update a single package to the latest version compatible with the version constraints in the source:
-#     conda-lock lock  --lockfile conda-lock-py3.11.yml --update PACKAGE
+#     conda-lock lock  --lockfile conda-lock-py3.12.yml --update PACKAGE
 # To re-solve the entire environment, e.g. after changing a version constraint in the source file:
-#     conda-lock -f /home/panos/Prog/mine/inspectds/ci/py3.11.yml -f py3.11.yml --lockfile conda-lock-py3.11.yml
+#     conda-lock -f py3.12.yml --lockfile conda-lock-py3.12.yml
 version: 1
 metadata:
   content_hash:
@@ -22,8 +22,7 @@ metadata:
   - linux-64
   - osx-64
   sources:
-  - /home/panos/Prog/mine/inspectds/ci/py3.11.yml
-  - py3.11.yml
+  - py3.12.yml
 package:
 - name: _libgcc_mutex
   version: '0.1'

@@ -27,18 +27,23 @@ conda_lock_ci:
 	conda-lock lock --mamba --check-input-hash --platform linux-64 --platform osx-64 -f ci/py3.9.yml --lockfile ci/conda-lock-py3.9.yml
 	conda-lock lock --mamba --check-input-hash --platform linux-64 --platform osx-64 -f ci/py3.10.yml --lockfile ci/conda-lock-py3.10.yml
 	conda-lock lock --mamba --check-input-hash --platform linux-64 --platform osx-64 -f ci/py3.11.yml --lockfile ci/conda-lock-py3.11.yml
+	conda-lock lock --mamba --check-input-hash --platform linux-64 --platform osx-64 -f ci/py3.12.yml --lockfile ci/conda-lock-py3.12.yml
 	conda-lock render --platform linux-64 --filename-template ci/conda-lock-{platform}-py3.9 ci/conda-lock-py3.9.yml
 	conda-lock render --platform linux-64 --filename-template ci/conda-lock-{platform}-py3.10 ci/conda-lock-py3.10.yml
 	conda-lock render --platform linux-64 --filename-template ci/conda-lock-{platform}-py3.11 ci/conda-lock-py3.11.yml
+	conda-lock render --platform linux-64 --filename-template ci/conda-lock-{platform}-py3.12 ci/conda-lock-py3.12.yml
 	conda-lock render --platform osx-64 --filename-template ci/conda-lock-{platform}-py3.9 ci/conda-lock-py3.9.yml
 	conda-lock render --platform osx-64 --filename-template ci/conda-lock-{platform}-py3.10 ci/conda-lock-py3.10.yml
 	conda-lock render --platform osx-64 --filename-template ci/conda-lock-{platform}-py3.11 ci/conda-lock-py3.11.yml
+	conda-lock render --platform osx-64 --filename-template ci/conda-lock-{platform}-py3.12 ci/conda-lock-py3.12.yml
 	mv ci/conda-lock-linux-64-py3.9 ci/conda-lock-Linux-64-py3.9
 	mv ci/conda-lock-linux-64-py3.10 ci/conda-lock-Linux-64-py3.10
 	mv ci/conda-lock-linux-64-py3.11 ci/conda-lock-Linux-64-py3.11
+	mv ci/conda-lock-linux-64-py3.12 ci/conda-lock-Linux-64-py3.12
 	mv ci/conda-lock-osx-64-py3.9 ci/conda-lock-macOS-64-py3.9
 	mv ci/conda-lock-osx-64-py3.10 ci/conda-lock-macOS-64-py3.10
 	mv ci/conda-lock-osx-64-py3.11 ci/conda-lock-macOS-64-py3.11
+	mv ci/conda-lock-osx-64-py3.12 ci/conda-lock-macOS-64-py3.12
 
 conda_lock:
 	conda-lock lock --mamba --check-input-hash -f pyproject.toml --lockfile conda-lock.yml

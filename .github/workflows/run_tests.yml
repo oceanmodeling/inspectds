@@ -30,11 +30,14 @@ jobs:
       matrix:
         os:
           - "ubuntu"
-          - "macos"
         python-version:
           - "3.9"
           - "3.10"
           - "3.11"
+          - "3.12"
+        include:
+          - os: "macos"
+            python-version: "3.9"
     runs-on: "${{ matrix.os }}-latest"
     defaults:
       run:
@@ -53,7 +56,7 @@ jobs:
           path: "~/conda_pkgs_dir"
           key: "conda-${{ runner.os }}-${{ hashFiles( env.LOCK_FILE ) }}-${{ env.CACHE_NUMBER }}"
       - name: "Setup conda"
-        uses: "conda-incubator/setup-miniconda@v2"
+        uses: "conda-incubator/setup-miniconda@v3"
         with:
           activate-environment: "inspectds_ci"
           # python-version: ${{ matrix.python-version }}
